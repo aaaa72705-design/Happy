@@ -6,17 +6,19 @@
   <title>Create Birthday Wish 🎂</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary: #ff4081;
       --primary-dark: #e73370;
       --secondary: #2196f3;
+      --accent: #ff9800;
       --light-bg: #f8f9fa;
       --dark-text: #333;
       --light-text: #fff;
-      --shadow: 0 4px 20px rgba(0,0,0,0.1);
-      --border-radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.1);
+      --border-radius: 20px;
     }
     
     * {
@@ -26,7 +28,7 @@
     }
     
     body {
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd);
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a1c4fd);
       background-size: 400% 400%;
       animation: gradient 15s ease infinite;
       font-family: 'Poppins', sans-serif;
@@ -36,6 +38,7 @@
       justify-content: center;
       align-items: center;
       padding: 20px;
+      overflow-x: hidden;
     }
     
     @keyframes gradient {
@@ -45,136 +48,258 @@
     }
     
     .container {
-      background: white;
-      padding: 30px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
       text-align: center;
       width: 100%;
-      max-width: 500px;
-      transition: all 0.3s ease;
+      max-width: 600px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+    
+    .decoration {
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+    .decoration:nth-child(2) {
+      top: auto;
+      bottom: -80px;
+      left: -80px;
+      background: var(--secondary);
+      width: 250px;
+      height: 250px;
     }
     
     .logo {
-      font-size: 2.5rem;
+      font-size: 4rem;
       margin-bottom: 10px;
+      animation: bounce 2s infinite;
+      position: relative;
+      z-index: 1;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
     
     h1 {
       color: var(--primary);
       margin-bottom: 10px;
-      font-weight: 600;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      position: relative;
+      z-index: 1;
     }
     
     .subtitle {
       color: #666;
       margin-bottom: 30px;
       font-weight: 400;
+      font-size: 1.1rem;
+      position: relative;
+      z-index: 1;
     }
     
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       text-align: left;
+      position: relative;
+      z-index: 1;
     }
     
     label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       font-weight: 500;
+      color: #555;
+      font-size: 1rem;
     }
     
     input, textarea {
       width: 100%;
-      padding: 12px 15px;
-      border-radius: 10px;
+      padding: 15px 20px;
+      border-radius: 12px;
       border: 1px solid #ddd;
       outline: none;
       font-family: 'Poppins', sans-serif;
       font-size: 16px;
       transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
     
     input:focus, textarea:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(255, 64, 129, 0.2);
+      box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.2);
+      background: white;
+      transform: translateY(-2px);
     }
     
     textarea {
-      min-height: 120px;
+      min-height: 150px;
       resize: vertical;
+      line-height: 1.6;
     }
     
-    button {
-      background: var(--primary);
+    .char-counter {
+      text-align: right;
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 5px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
       border: none;
-      padding: 12px 30px;
-      border-radius: 10px;
+      padding: 15px 40px;
+      border-radius: 50px;
       cursor: pointer;
       font-family: 'Poppins', sans-serif;
       font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+      position: relative;
+      z-index: 1;
+      margin-top: 10px;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 64, 129, 0.6);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(-1px);
+    }
+    
+    .btn-primary:disabled {
+      background: #ccc;
+      box-shadow: none;
+      transform: none;
+      cursor: not-allowed;
+    }
+    
+    .btn-secondary {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
       font-weight: 500;
       transition: all 0.3s ease;
-      margin: 10px 5px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 3px 10px rgba(33, 150, 243, 0.3);
+      margin-top: 15px;
     }
     
-    button:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    
-    button.secondary {
-      background: var(--secondary);
-    }
-    
-    button.secondary:hover {
+    .btn-secondary:hover {
       background: #1976d2;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
     }
     
     #link {
-      margin-top: 20px;
-      padding: 15px;
-      background: var(--light-bg);
-      border-radius: 10px;
+      margin-top: 25px;
+      padding: 20px;
+      background: rgba(248, 249, 250, 0.8);
+      border-radius: 15px;
       word-break: break-all;
+      border-left: 4px solid var(--secondary);
+      position: relative;
+      z-index: 1;
     }
     
     #link a {
       color: var(--secondary);
       text-decoration: none;
       font-weight: 500;
+      font-size: 1rem;
+      display: block;
+      margin-top: 10px;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+      transition: all 0.3s ease;
     }
     
     #link a:hover {
+      background: var(--light-bg);
       text-decoration: underline;
     }
     
     .wish-card {
-      background: white;
+      background: linear-gradient(135deg, #ffffff, #f8f9fa);
       padding: 30px;
       border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
       text-align: center;
       margin-bottom: 30px;
       position: relative;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+    
+    .wish-card:hover {
+      transform: translateY(-5px);
     }
     
     .wish-card::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: linear-gradient(to right, var(--primary), var(--secondary));
-      border-radius: var(--border-radius) var(--border-radius) 0 0;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      z-index: -1;
+      border-radius: calc(var(--border-radius) + 5px);
+      opacity: 0.1;
     }
     
     .wish-name {
       color: var(--primary);
-      font-size: 1.8rem;
+      font-size: 2rem;
       margin-bottom: 15px;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
     }
     
     .wish-message {
@@ -182,9 +307,10 @@
       line-height: 1.6;
       margin-bottom: 20px;
       text-align: left;
-      background: var(--light-bg);
+      background: white;
       padding: 20px;
       border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
     }
     
     .confetti {
@@ -194,6 +320,7 @@
       background-color: var(--primary);
       border-radius: 50%;
       animation: confetti-fall 5s linear infinite;
+      z-index: 0;
     }
     
     @keyframes confetti-fall {
@@ -214,10 +341,13 @@
     .error-message {
       color: #f44336;
       background: #ffebee;
-      padding: 10px;
-      border-radius: 5px;
-      margin-top: 10px;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
       text-align: center;
+      border-left: 4px solid #f44336;
+      position: relative;
+      z-index: 1;
     }
     
     .success-message {
@@ -228,47 +358,167 @@
       margin-top: 20px;
       text-align: center;
       border-left: 4px solid #4caf50;
+      position: relative;
+      z-index: 1;
     }
     
-    @media (max-width: 600px) {
+    .balloon {
+      position: absolute;
+      width: 40px;
+      height: 50px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: float 15s ease-in infinite;
+      z-index: 0;
+    }
+    
+    .balloon::before {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 30px;
+      background: #ddd;
+    }
+    
+    .balloon:nth-child(2n) {
+      background: var(--secondary);
+      animation-delay: 2s;
+      animation-duration: 18s;
+    }
+    
+    .balloon:nth-child(3n) {
+      background: var(--accent);
+      animation-delay: 4s;
+      animation-duration: 12s;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0);
+      }
+      100% {
+        transform: translateY(-100px) translateX(20px);
+      }
+    }
+    
+    .feature-list {
+      text-align: left;
+      margin: 25px 0;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .feature-list ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .feature-list li {
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .feature-list i {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+    
+    @media (max-width: 768px) {
       .container {
-        padding: 20px;
+        padding: 30px 20px;
       }
       
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .logo {
+        font-size: 3.5rem;
+      }
+      
+      input, textarea {
+        padding: 12px 15px;
+      }
+      
+      .btn-primary {
+        width: 100%;
+        padding: 14px 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
       h1 {
         font-size: 1.8rem;
       }
       
-      button {
-        width: 100%;
-        margin: 5px 0;
+      .logo {
+        font-size: 3rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+      
+      .feature-list {
+        margin: 20px 0;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Background Balloons -->
+  <div class="balloon" style="left: 5%;"></div>
+  <div class="balloon" style="left: 15%;"></div>
+  <div class="balloon" style="left: 25%;"></div>
+  <div class="balloon" style="left: 75%;"></div>
+  <div class="balloon" style="left: 85%;"></div>
+  <div class="balloon" style="left: 95%;"></div>
+
   <div class="container">
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+    
     <!-- Create Wish Section -->
     <div id="create-section">
       <div class="logo">🎂</div>
       <h1>Create Birthday Wish</h1>
       <p class="subtitle">Make someone's day special with a personalized birthday message</p>
       
-      <div class="form-group">
-        <label for="name">Recipient's Name</label>
-        <input type="text" id="name" placeholder="Enter name" required />
+      <div class="feature-list">
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Create beautiful birthday wishes</li>
+          <li><i class="fas fa-share-alt"></i> Share with a unique link</li>
+          <li><i class="fas fa-magic"></i> Professional design with animations</li>
+        </ul>
       </div>
       
       <div class="form-group">
-        <label for="message">Your Birthday Message</label>
-        <textarea id="message" placeholder="Write your heartfelt birthday wish here..." required></textarea>
+        <label for="name"><i class="fas fa-user"></i> Recipient's Name</label>
+        <input type="text" id="name" placeholder="Enter the birthday person's name" required />
       </div>
       
-      <button id="submit">
-        Create Birthday Wish
+      <div class="form-group">
+        <label for="message"><i class="fas fa-pencil-alt"></i> Your Birthday Message</label>
+        <textarea id="message" placeholder="Write your heartfelt birthday wish here... You can include warm wishes, memories, or anything that makes the day special!" required></textarea>
+        <div class="char-counter"><span id="char-count">0</span>/500 characters</div>
+      </div>
+      
+      <button id="submit" class="btn-primary">
+        <i class="fas fa-gift"></i> Create Birthday Wish
       </button>
       
-      <div id="link" class="hidden"></div>
+      <div id="link" class="hidden">
+        <p><strong>Your wish has been created!</strong> Share this link with the birthday person:</p>
+        <a id="wish-link" href="#" target="_blank"></a>
+        <button class="btn-secondary" id="copy-link">
+          <i class="fas fa-copy"></i> Copy Link
+        </button>
+      </div>
     </div>
     
     <!-- View Wish Section -->
@@ -279,17 +529,18 @@
       <div class="wish-card">
         <h2 class="wish-name" id="view-name">Name</h2>
         <div class="wish-message" id="view-message">Message</div>
-        <p>Wish created on <span id="view-date"></span></p>
       </div>
       
-      <button id="shareBtn">Share This Wish</button>
-      <button id="createNewBtn" class="secondary">Create New Wish</button>
+      <button id="shareBtn" class="btn-primary">
+        <i class="fas fa-share-alt"></i> Share This Wish
+      </button>
+      <button id="createNewBtn" class="btn-secondary">
+        <i class="fas fa-plus"></i> Create New Wish
+      </button>
     </div>
     
-    <!-- Error Message -->
+    <!-- Messages -->
     <div id="error-message" class="error-message hidden"></div>
-    
-    <!-- Success Message -->
     <div id="success-message" class="success-message hidden"></div>
   </div>
 
@@ -319,11 +570,13 @@
     const viewSection = document.getElementById('view-section');
     const nameInput = document.getElementById('name');
     const messageInput = document.getElementById('message');
+    const charCount = document.getElementById('char-count');
     const submitBtn = document.getElementById('submit');
     const linkDiv = document.getElementById('link');
+    const wishLink = document.getElementById('wish-link');
+    const copyLinkBtn = document.getElementById('copy-link');
     const viewName = document.getElementById('view-name');
     const viewMessage = document.getElementById('view-message');
-    const viewDate = document.getElementById('view-date');
     const shareBtn = document.getElementById('shareBtn');
     const createNewBtn = document.getElementById('createNewBtn');
     const errorMessage = document.getElementById('error-message');
@@ -346,6 +599,11 @@
     submitBtn.addEventListener('click', createWish);
     shareBtn.addEventListener('click', shareWish);
     createNewBtn.addEventListener('click', showCreateSection);
+    copyLinkBtn.addEventListener('click', copyWishLink);
+    messageInput.addEventListener('input', updateCharCount);
+
+    // Initialize character count
+    updateCharCount();
 
     // Functions
     function showCreateSection() {
@@ -381,6 +639,20 @@
       }, 3000);
     }
 
+    function updateCharCount() {
+      const count = messageInput.value.length;
+      charCount.textContent = count;
+      
+      // Change color if approaching limit
+      if (count > 450) {
+        charCount.style.color = '#f44336';
+      } else if (count > 400) {
+        charCount.style.color = '#ff9800';
+      } else {
+        charCount.style.color = '#888';
+      }
+    }
+
     function createWish() {
       const name = nameInput.value.trim();
       const message = messageInput.value.trim();
@@ -390,9 +662,14 @@
         return;
       }
       
+      if (message.length > 500) {
+        showError("Message is too long! Please keep it under 500 characters.");
+        return;
+      }
+      
       // Disable button during creation
       submitBtn.disabled = true;
-      submitBtn.textContent = "Creating...";
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
       
       const newRef = db.ref("wishes").push();
       const id = newRef.key;
@@ -406,15 +683,14 @@
         // Create confetti effect
         createConfetti();
         
-        // Update URL without reloading
-        if (window.history.replaceState) {
-          const newUrl = `${window.location.pathname}?id=${id}`;
-          window.history.replaceState({}, document.title, newUrl);
-        }
+        // Show the shareable link
+        const url = `${window.location.origin}${window.location.pathname}?id=${id}`;
+        wishLink.href = url;
+        wishLink.textContent = url;
+        linkDiv.classList.remove('hidden');
         
-        // Load and show the wish
-        loadWish(id);
-        showViewSection();
+        // Scroll to the link
+        linkDiv.scrollIntoView({ behavior: 'smooth' });
         
         // Show success message
         showSuccess("🎉 Birthday wish created successfully!");
@@ -425,8 +701,23 @@
       .finally(() => {
         // Reset button state
         submitBtn.disabled = false;
-        submitBtn.textContent = "Create Birthday Wish";
+        submitBtn.innerHTML = '<i class="fas fa-gift"></i> Create Birthday Wish';
       });
+    }
+
+    function copyWishLink() {
+      navigator.clipboard.writeText(wishLink.href)
+        .then(() => {
+          // Change button text temporarily
+          const originalText = copyLinkBtn.innerHTML;
+          copyLinkBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+          setTimeout(() => {
+            copyLinkBtn.innerHTML = originalText;
+          }, 2000);
+        })
+        .catch(err => {
+          showError("Failed to copy link: " + err.message);
+        });
     }
 
     function loadWish(id) {
@@ -435,16 +726,6 @@
           const data = snapshot.val();
           viewName.textContent = data.name;
           viewMessage.textContent = data.message;
-          
-          // Format date
-          const date = new Date(data.createdAt);
-          viewDate.textContent = date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
           
           // Create confetti effect
           createConfetti();
