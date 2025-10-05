@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Birthday Wish 🎂</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>🎉 Create Birthday Wish</h2>
+    <input type="text" id="name" placeholder="Enter Name" required>
+    <textarea id="message" placeholder="Enter your birthday wish..." required></textarea>
+    <button id="submit">Create Wish</button>
+    <p id="link"></p>
+  </div>
+
+  <script type="module">
+    import { db, ref, push, set } from "./firebase.js";
+
+    const submitBtn = document.getElementById("submit");
+    const linkBox = document.getElementById("link");
+
+    submitBtn.addEventListener("click", async () => {
+      const name = document.getElementById("name").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !message) {
+        alert("Please fill in all fields!");
+        return;
+      }
+
+      // Generate unique ID
+      const newPostRef = push(ref(db, "wishes"));
+      const id = newPostRef.key;
+
+      await set(newPostRef, {
+        name: name,
+        message: message,
+        createdAt: new Date().toISOString(),
+      });
+
+      const url = `https://YOUR_GITHUB_USERNAME.github.io/store/view.html?id=${id}`;
+      linkBox.innerHTML = `
+        ✅ Wish created!<br>
+        <a href="${url}" target="_blank">${url}</a>
+      `;
+    });
+  </script>
+</body>
+</html>
