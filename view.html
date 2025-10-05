@@ -1,91 +1,535 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Wish 🎂</title>
-  <style>
-    body {
-      background: linear-gradient(to right, #ffecd2, #fcb69f);
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
-    h2 { color: #ff4081; }
-    button {
-      background: #ff4081;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Wish 🎂</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff4081;
+            --primary-dark: #e73370;
+            --secondary: #2196f3;
+            --accent: #ff9800;
+            --light-bg: #f8f9fa;
+            --dark-text: #333;
+            --light-text: #fff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --border-radius: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a1c4fd);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+        
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: 400;
+            font-size: 1.1rem;
+        }
+        
+        .wish-card {
+            background: var(--light-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        
+        .wish-card::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            z-index: -1;
+            border-radius: calc(var(--border-radius) + 5px);
+            opacity: 0.1;
+        }
+        
+        .wish-name {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .wish-name::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+        }
+        
+        .wish-message {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .wish-message::before, .wish-message::after {
+            content: """;
+            font-size: 4rem;
+            color: rgba(255, 64, 129, 0.2);
+            position: absolute;
+            font-family: serif;
+        }
+        
+        .wish-message::before {
+            top: -10px;
+            left: 10px;
+        }
+        
+        .wish-message::after {
+            bottom: -30px;
+            right: 10px;
+        }
+        
+        .wish-date {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(255, 64, 129, 0.3);
+        }
+        
+        button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 64, 129, 0.4);
+        }
+        
+        button.secondary {
+            background: var(--secondary);
+            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+        }
+        
+        button.secondary:hover {
+            background: #1976d2;
+            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
+        }
+        
+        button.tertiary {
+            background: var(--accent);
+            box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+        }
+        
+        button.tertiary:hover {
+            background: #f57c00;
+            box-shadow: 0 6px 15px rgba(255, 152, 0, 0.4);
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            animation: confetti-fall 5s linear infinite;
+            z-index: 1000;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            color: #f44336;
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            border-left: 4px solid #f44336;
+        }
+        
+        .success-message {
+            color: #4caf50;
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .wish-name {
+                font-size: 1.8rem;
+            }
+            
+            .wish-message {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h2 id="title">🎉 Happy Birthday!</h2>
-    <h3 id="name"></h3>
-    <p id="message"></p>
-    <button id="shareBtn">🔗 Share</button>
-  </div>
+    <div class="container">
+        <div class="logo">🎂</div>
+        <h1>Happy Birthday!</h1>
+        <p class="subtitle">A special message just for you</p>
+        
+        <div class="wish-card">
+            <h2 class="wish-name" id="view-name">Loading...</h2>
+            <div class="wish-message" id="view-message">Loading your birthday wish...</div>
+            <p class="wish-date">Created on <span id="view-date">Loading...</span></p>
+        </div>
+        
+        <div class="action-buttons">
+            <button id="shareBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+                </svg>
+                Share This Wish
+            </button>
+            <button id="createBtn" class="secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+                Create Your Own
+            </button>
+            <button id="celebrateBtn" class="tertiary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                </svg>
+                Celebrate!
+            </button>
+        </div>
+        
+        <div id="message" class="hidden"></div>
+        
+        <div class="footer">
+            Made with ❤️ using Birthday Wish Creator
+        </div>
+    </div>
 
-  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCd-9p5gqz6SzmmzVq6SqbJ0gXmsNpUUTQ",
-      authDomain: "happy-birthday-2deb4.firebaseapp.com",
-      databaseURL: "https://happy-birthday-2deb4-default-rtdb.firebaseio.com",
-      projectId: "happy-birthday-2deb4",
-      storageBucket: "happy-birthday-2deb4.firebasestorage.app",
-      messagingSenderId: "657496676319",
-      appId: "1:657496676319:web:956a472024be794df5566a",
-      measurementId: "G-01ZN71CQDD"
-    };
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCd-9p5gqz6SzmmzVq6SqbJ0gXmsNpUUTQ",
+            authDomain: "happy-birthday-2deb4.firebaseapp.com",
+            databaseURL: "https://happy-birthday-2deb4-default-rtdb.firebaseio.com",
+            projectId: "happy-birthday-2deb4",
+            storageBucket: "happy-birthday-2deb4.firebasestorage.app",
+            messagingSenderId: "657496676319",
+            appId: "1:657496676319:web:956a472024be794df5566a",
+            measurementId: "G-01ZN71CQDD"
+        };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+        // DOM elements
+        const viewName = document.getElementById('view-name');
+        const viewMessage = document.getElementById('view-message');
+        const viewDate = document.getElementById('view-date');
+        const shareBtn = document.getElementById('shareBtn');
+        const createBtn = document.getElementById('createBtn');
+        const celebrateBtn = document.getElementById('celebrateBtn');
+        const messageDiv = document.getElementById('message');
 
-    if (id) {
-      db.ref("wishes/" + id).get().then(snapshot => {
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          document.getElementById("name").innerText = "🎂 " + data.name;
-          document.getElementById("message").innerText = data.message;
+        // Get wish ID from URL parameters
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        // Load the wish if ID is provided
+        if (id) {
+            loadWish(id);
         } else {
-          document.getElementById("title").innerText = "Wish not found ❌";
+            showError("No birthday wish ID provided in the URL.");
         }
-      });
-    }
 
-    document.getElementById("shareBtn").addEventListener("click", () => {
-      if (navigator.share) {
-        navigator.share({
-          title: "Birthday Wish 🎉",
-          text: "Check out this special birthday wish!",
-          url: window.location.href
-        });
-      } else {
-        alert("Sharing not supported in this browser.");
-      }
-    });
-  </script>
+        // Event listeners
+        shareBtn.addEventListener('click', shareWish);
+        createBtn.addEventListener('click', createNewWish);
+        celebrateBtn.addEventListener('click', celebrate);
+
+        // Functions
+        function loadWish(id) {
+            db.ref("wishes/" + id).get().then(snapshot => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    viewName.textContent = data.name;
+                    viewMessage.textContent = data.message;
+                    
+                    // Format date
+                    const date = new Date(data.createdAt);
+                    viewDate.textContent = date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    // Create confetti effect
+                    createConfetti();
+                    
+                    // Update page title
+                    document.title = `Happy Birthday ${data.name}! 🎂`;
+                    
+                    showSuccess("Birthday wish loaded successfully!");
+                    
+                    // Auto-celebrate after a short delay
+                    setTimeout(celebrate, 1000);
+                } else {
+                    showError("Birthday wish not found! The link may be expired or incorrect.");
+                }
+            }).catch(err => {
+                showError("Error loading wish: " + err.message);
+            });
+        }
+
+        function shareWish() {
+            if (navigator.share) {
+                navigator.share({
+                    title: "Birthday Wish 🎉",
+                    text: "Check out this special birthday wish!",
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => showSuccess("Link copied to clipboard! You can now share it."))
+                    .catch(() => showError("Sharing not supported in this browser."));
+            }
+        }
+
+        function createNewWish() {
+            window.location.href = "index.html";
+        }
+
+        function celebrate() {
+            createConfetti(100);
+            playCelebrationSound();
+            showSuccess("🎉 Happy Birthday! 🎉");
+        }
+
+        function createConfetti(count = 50) {
+            const colors = ['#ff4081', '#2196f3', '#4caf50', '#ff9800', '#9c27b0', '#00bcd4'];
+            
+            for (let i = 0; i < count; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                confetti.style.width = Math.random() * 10 + 8 + 'px';
+                confetti.style.height = confetti.style.width;
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.remove();
+                    }
+                }, 5000);
+            }
+        }
+
+        function playCelebrationSound() {
+            // Create a simple celebration sound using Web Audio API
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 1);
+            } catch (e) {
+                console.log("Web Audio API not supported");
+            }
+        }
+
+        function showError(message) {
+            messageDiv.textContent = message;
+            messageDiv.className = 'error-message';
+            messageDiv.classList.remove('hidden');
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            messageDiv.textContent = message;
+            messageDiv.className = 'success-message';
+            messageDiv.classList.remove('hidden');
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
