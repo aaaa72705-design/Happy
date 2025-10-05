@@ -295,6 +295,29 @@
             box-shadow: 0 8px 20px rgba(156, 39, 176, 0.5);
         }
         
+        /* Sparkle Effect */
+        .sparkle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background-color: gold;
+            border-radius: 50%;
+            animation: sparkle-twinkle 2s ease-in-out infinite;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        @keyframes sparkle-twinkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+        
         .confetti {
             position: fixed;
             width: 15px;
@@ -303,6 +326,7 @@
             border-radius: 50%;
             animation: confetti-fall 5s linear infinite;
             z-index: 1000;
+            pointer-events: none;
         }
         
         @keyframes confetti-fall {
@@ -313,37 +337,6 @@
             100% {
                 transform: translateY(100vh) rotate(720deg);
                 opacity: 0;
-            }
-        }
-        
-        .balloon {
-            position: fixed;
-            width: 40px;
-            height: 50px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: balloon-rise 15s linear infinite;
-            z-index: 999;
-            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.2);
-        }
-        
-        .balloon::before {
-            content: "";
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 15px;
-            background: #ffccbc;
-        }
-        
-        @keyframes balloon-rise {
-            0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-100px) translateX(20px) rotate(10deg);
             }
         }
         
@@ -569,7 +562,7 @@
         // Load the wish if ID is provided
         if (id) {
             loadWish(id);
-            createBalloons(5);
+            createSparkles(15);
         } else {
             showError("No birthday wish ID provided in the URL.");
         }
@@ -608,7 +601,7 @@
                     // Auto-celebrate after a short delay
                     setTimeout(() => {
                         createConfetti(40);
-                        createBalloons(8);
+                        createSparkles(25);
                     }, 1500);
                 } else {
                     showError("Birthday wish not found! The link may be expired or incorrect.");
@@ -639,7 +632,7 @@
 
         function celebrate() {
             createConfetti(80);
-            createBalloons(12);
+            createSparkles(40);
             playCelebrationSound();
             showSuccess("🎉 Happy Birthday! 🎉");
         }
@@ -666,24 +659,25 @@
             }
         }
 
-        function createBalloons(count) {
-            const colors = ['#e91e63', '#9c27b0', '#2196f3', '#4caf50', '#ff9800'];
+        function createSparkles(count) {
+            const colors = ['gold', 'silver', '#e91e63', '#9c27b0', '#2196f3'];
             
             for (let i = 0; i < count; i++) {
-                const balloon = document.createElement('div');
-                balloon.className = 'balloon';
-                balloon.style.left = Math.random() * 100 + '%';
-                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                balloon.style.animationDelay = Math.random() * 5 + 's';
-                balloon.style.animationDuration = (15 + Math.random() * 10) + 's';
-                document.body.appendChild(balloon);
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparkle.style.animationDuration = (1 + Math.random() * 2) + 's';
+                document.body.appendChild(sparkle);
                 
-                // Remove balloon after animation
+                // Remove sparkle after animation
                 setTimeout(() => {
-                    if (balloon.parentNode) {
-                        balloon.remove();
+                    if (sparkle.parentNode) {
+                        sparkle.remove();
                     }
-                }, 25000);
+                }, 3000);
             }
         }
 
