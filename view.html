@@ -28,8 +28,6 @@
         
         body {
             background: linear-gradient(135deg, #f8bbd9, #e1bee7, #bbdefb);
-            background-size: 400% 400%;
-            animation: gradient 20s ease infinite;
             font-family: 'Poppins', sans-serif;
             color: var(--dark-text);
             min-height: 100vh;
@@ -38,12 +36,6 @@
             align-items: center;
             padding: 20px;
             overflow-x: hidden;
-        }
-        
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
         
         .container {
@@ -58,7 +50,6 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            margin-bottom: 100px;
         }
         
         .container::before {
@@ -75,12 +66,6 @@
         .logo {
             font-size: 5rem;
             margin-bottom: 10px;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
         }
         
         h1 {
@@ -109,8 +94,6 @@
             position: relative;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             border: 1px solid rgba(233, 30, 99, 0.2);
-            transform-style: preserve-3d;
-            perspective: 1000px;
         }
         
         .wish-card::before {
@@ -160,26 +143,6 @@
             font-family: 'Poppins', sans-serif;
             border-left: 5px solid var(--primary);
             border-right: 5px solid var(--secondary);
-        }
-        
-        .wish-message::before {
-            content: """;
-            font-size: 5rem;
-            color: rgba(233, 30, 99, 0.2);
-            position: absolute;
-            font-family: serif;
-            top: -20px;
-            left: 15px;
-        }
-        
-        .wish-message::after {
-            content: """;
-            font-size: 5rem;
-            color: rgba(233, 30, 99, 0.2);
-            position: absolute;
-            font-family: serif;
-            bottom: -40px;
-            right: 15px;
         }
         
         .wish-date {
@@ -295,51 +258,6 @@
             box-shadow: 0 8px 20px rgba(156, 39, 176, 0.5);
         }
         
-        /* Sparkle Effect */
-        .sparkle {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background-color: gold;
-            border-radius: 50%;
-            animation: sparkle-twinkle 2s ease-in-out infinite;
-            z-index: 1000;
-            pointer-events: none;
-        }
-        
-        @keyframes sparkle-twinkle {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
-        }
-        
-        .confetti {
-            position: fixed;
-            width: 15px;
-            height: 15px;
-            background-color: var(--primary);
-            border-radius: 50%;
-            animation: confetti-fall 5s linear infinite;
-            z-index: 1000;
-            pointer-events: none;
-        }
-        
-        @keyframes confetti-fall {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-        
         .error-message {
             color: #d32f2f;
             background: #ffebee;
@@ -375,7 +293,6 @@
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
-                margin-bottom: 120px;
             }
             
             h1 {
@@ -410,7 +327,6 @@
             
             .container {
                 padding: 25px 15px;
-                margin-bottom: 130px;
             }
             
             h1 {
@@ -544,25 +460,9 @@
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
 
-        // Preload celebration sounds
-        const celebrationSounds = [
-            "https://assets.mixkit.co/sfx/preview/mixkit-happy-birthday-horn-576.mp3",
-            "https://assets.mixkit.co/sfx/preview/mixkit-party-horn-618.mp3",
-            "https://assets.mixkit.co/sfx/preview/mixkit-gathering-attention-bell-549.mp3"
-        ];
-        
-        const audioElements = [];
-        celebrationSounds.forEach(sound => {
-            const audio = new Audio();
-            audio.src = sound;
-            audio.preload = 'auto';
-            audioElements.push(audio);
-        });
-
         // Load the wish if ID is provided
         if (id) {
             loadWish(id);
-            createSparkles(15);
         } else {
             showError("No birthday wish ID provided in the URL.");
         }
@@ -590,19 +490,10 @@
                         minute: '2-digit'
                     });
                     
-                    // Create confetti effect
-                    createConfetti(30);
-                    
                     // Update page title
                     document.title = `Happy Birthday ${data.name}! 🎂`;
                     
                     showSuccess("Birthday wish loaded successfully!");
-                    
-                    // Auto-celebrate after a short delay
-                    setTimeout(() => {
-                        createConfetti(40);
-                        createSparkles(25);
-                    }, 1500);
                 } else {
                     showError("Birthday wish not found! The link may be expired or incorrect.");
                 }
@@ -631,74 +522,7 @@
         }
 
         function celebrate() {
-            createConfetti(80);
-            createSparkles(40);
-            playCelebrationSound();
             showSuccess("🎉 Happy Birthday! 🎉");
-        }
-
-        function createConfetti(count = 50) {
-            const colors = ['#e91e63', '#9c27b0', '#2196f3', '#4caf50', '#ff9800', '#00bcd4'];
-            
-            for (let i = 0; i < count; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDelay = Math.random() * 5 + 's';
-                confetti.style.width = Math.random() * 12 + 8 + 'px';
-                confetti.style.height = confetti.style.width;
-                document.body.appendChild(confetti);
-                
-                // Remove confetti after animation
-                setTimeout(() => {
-                    if (confetti.parentNode) {
-                        confetti.remove();
-                    }
-                }, 5000);
-            }
-        }
-
-        function createSparkles(count) {
-            const colors = ['gold', 'silver', '#e91e63', '#9c27b0', '#2196f3'];
-            
-            for (let i = 0; i < count; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = Math.random() * 100 + '%';
-                sparkle.style.top = Math.random() * 100 + '%';
-                sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                sparkle.style.animationDelay = Math.random() * 3 + 's';
-                sparkle.style.animationDuration = (1 + Math.random() * 2) + 's';
-                document.body.appendChild(sparkle);
-                
-                // Remove sparkle after animation
-                setTimeout(() => {
-                    if (sparkle.parentNode) {
-                        sparkle.remove();
-                    }
-                }, 3000);
-            }
-        }
-
-        function playCelebrationSound() {
-            // Play a random celebration sound
-            const randomIndex = Math.floor(Math.random() * audioElements.length);
-            const audio = audioElements[randomIndex];
-            
-            // Reset audio to start and play
-            audio.currentTime = 0;
-            
-            // Use a promise to handle autoplay restrictions
-            const playPromise = audio.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    // Autoplay was prevented, provide user feedback
-                    console.log("Audio play was prevented: ", error);
-                    showError("Click the Celebrate button again to play sound!");
-                });
-            }
         }
 
         function showError(message) {
