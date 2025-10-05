@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Birthday Wish 🎂</title>
+  <title>Birthday Wish Creator 🎂</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -214,7 +214,7 @@
       background: var(--secondary);
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 12px 25px;
       border-radius: 50px;
       cursor: pointer;
       font-family: 'Poppins', sans-serif;
@@ -226,13 +226,38 @@
       justify-content: center;
       gap: 8px;
       box-shadow: 0 3px 10px rgba(33, 150, 243, 0.3);
-      margin-top: 15px;
+      margin: 5px;
     }
     
     .btn-secondary:hover {
       background: #1976d2;
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+    }
+    
+    .btn-tertiary {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 3px 10px rgba(255, 152, 0, 0.3);
+      margin: 5px;
+    }
+    
+    .btn-tertiary:hover {
+      background: #f57c00;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
     }
     
     #link {
@@ -428,6 +453,58 @@
       font-size: 1.2rem;
     }
     
+    .music-player {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 50px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    
+    .music-player button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .music-player button:hover {
+      transform: scale(1.1);
+      background: var(--primary-dark);
+    }
+    
+    .music-info {
+      font-size: 0.9rem;
+      color: #666;
+      max-width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    
     @media (max-width: 768px) {
       .container {
         padding: 30px 20px;
@@ -449,6 +526,16 @@
         width: 100%;
         padding: 14px 20px;
       }
+      
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn-secondary, .btn-tertiary {
+        width: 100%;
+        max-width: 250px;
+      }
     }
     
     @media (max-width: 480px) {
@@ -467,6 +554,17 @@
       .feature-list {
         margin: 20px 0;
       }
+      
+      .music-player {
+        top: 10px;
+        left: 10px;
+        padding: 10px;
+      }
+      
+      .music-info {
+        max-width: 120px;
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
@@ -478,6 +576,18 @@
   <div class="balloon" style="left: 75%;"></div>
   <div class="balloon" style="left: 85%;"></div>
   <div class="balloon" style="left: 95%;"></div>
+
+  <!-- Music Player (Only in View Mode) -->
+  <div class="music-player hidden" id="musicPlayer">
+    <button id="playPauseBtn">
+      <i class="fas fa-play"></i>
+    </button>
+    <div class="music-info">Happy Birthday Song</div>
+    <audio id="birthdayAudio" loop>
+      <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-443.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
 
   <div class="container">
     <div class="decoration"></div>
@@ -515,9 +625,14 @@
       <div id="link" class="hidden">
         <p><strong>Your wish has been created!</strong> Share this link with the birthday person:</p>
         <a id="wish-link" href="#" target="_blank"></a>
-        <button class="btn-secondary" id="copy-link">
-          <i class="fas fa-copy"></i> Copy Link
-        </button>
+        <div class="action-buttons">
+          <button class="btn-secondary" id="copy-link">
+            <i class="fas fa-copy"></i> Copy Link
+          </button>
+          <button class="btn-tertiary" id="view-wish">
+            <i class="fas fa-eye"></i> View Wish
+          </button>
+        </div>
       </div>
     </div>
     
@@ -525,18 +640,24 @@
     <div id="view-section" class="hidden">
       <div class="logo">🎉</div>
       <h1>Happy Birthday!</h1>
+      <p class="subtitle">A heartfelt message just for you</p>
       
       <div class="wish-card">
         <h2 class="wish-name" id="view-name">Name</h2>
         <div class="wish-message" id="view-message">Message</div>
       </div>
       
-      <button id="shareBtn" class="btn-primary">
-        <i class="fas fa-share-alt"></i> Share This Wish
-      </button>
-      <button id="createNewBtn" class="btn-secondary">
-        <i class="fas fa-plus"></i> Create New Wish
-      </button>
+      <div class="action-buttons">
+        <button id="shareBtn" class="btn-primary">
+          <i class="fas fa-share-alt"></i> Share This Wish
+        </button>
+        <button id="createNewBtn" class="btn-secondary">
+          <i class="fas fa-plus"></i> Create New Wish
+        </button>
+        <button id="celebrateBtn" class="btn-tertiary">
+          <i class="fas fa-birthday-cake"></i> Celebrate!
+        </button>
+      </div>
     </div>
     
     <!-- Messages -->
@@ -575,12 +696,21 @@
     const linkDiv = document.getElementById('link');
     const wishLink = document.getElementById('wish-link');
     const copyLinkBtn = document.getElementById('copy-link');
+    const viewWishBtn = document.getElementById('view-wish');
     const viewName = document.getElementById('view-name');
     const viewMessage = document.getElementById('view-message');
     const shareBtn = document.getElementById('shareBtn');
     const createNewBtn = document.getElementById('createNewBtn');
+    const celebrateBtn = document.getElementById('celebrateBtn');
     const errorMessage = document.getElementById('error-message');
     const successMessage = document.getElementById('success-message');
+    const musicPlayer = document.getElementById('musicPlayer');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const birthdayAudio = document.getElementById('birthdayAudio');
+    
+    // Music state
+    let isPlaying = false;
+    let currentWishId = null;
 
     // Check if we're viewing a wish
     const params = new URLSearchParams(window.location.search);
@@ -599,8 +729,11 @@
     submitBtn.addEventListener('click', createWish);
     shareBtn.addEventListener('click', shareWish);
     createNewBtn.addEventListener('click', showCreateSection);
+    celebrateBtn.addEventListener('click', celebrate);
     copyLinkBtn.addEventListener('click', copyWishLink);
+    viewWishBtn.addEventListener('click', viewCreatedWish);
     messageInput.addEventListener('input', updateCharCount);
+    playPauseBtn.addEventListener('click', toggleMusic);
 
     // Initialize character count
     updateCharCount();
@@ -611,6 +744,15 @@
       viewSection.classList.add('hidden');
       errorMessage.classList.add('hidden');
       successMessage.classList.add('hidden');
+      musicPlayer.classList.add('hidden');
+      
+      // Stop music when returning to create section
+      if (isPlaying) {
+        birthdayAudio.pause();
+        isPlaying = false;
+        updatePlayButton();
+      }
+      
       // Clear URL parameters
       if (window.history.replaceState) {
         window.history.replaceState({}, document.title, window.location.pathname);
@@ -622,6 +764,7 @@
       viewSection.classList.remove('hidden');
       errorMessage.classList.add('hidden');
       successMessage.classList.add('hidden');
+      musicPlayer.classList.remove('hidden');
     }
 
     function showError(message) {
@@ -673,6 +816,7 @@
       
       const newRef = db.ref("wishes").push();
       const id = newRef.key;
+      currentWishId = id;
 
       newRef.set({ 
         name, 
@@ -720,6 +864,20 @@
         });
     }
 
+    function viewCreatedWish() {
+      if (currentWishId) {
+        // Update URL without reloading
+        if (window.history.replaceState) {
+          const newUrl = `${window.location.pathname}?id=${currentWishId}`;
+          window.history.replaceState({}, document.title, newUrl);
+        }
+        
+        // Load and show the wish
+        loadWish(currentWishId);
+        showViewSection();
+      }
+    }
+
     function loadWish(id) {
       db.ref("wishes/" + id).get().then(snapshot => {
         if (snapshot.exists()) {
@@ -727,8 +885,23 @@
           viewName.textContent = data.name;
           viewMessage.textContent = data.message;
           
+          // Update page title
+          document.title = `Happy Birthday ${data.name}! 🎂`;
+          
           // Create confetti effect
           createConfetti();
+          
+          // Try to auto-play music (may not work in all browsers)
+          setTimeout(() => {
+            birthdayAudio.play().then(() => {
+              isPlaying = true;
+              updatePlayButton();
+            }).catch(e => {
+              console.log("Auto-play prevented by browser");
+            });
+          }, 500);
+          
+          showSuccess("Birthday wish loaded successfully!");
         } else {
           showError("Wish not found!");
           showCreateSection();
@@ -748,16 +921,47 @@
       } else {
         // Fallback: copy to clipboard
         navigator.clipboard.writeText(window.location.href)
-          .then(() => showSuccess("Link copied to clipboard!"))
+          .then(() => showSuccess("Link copied to clipboard! You can now share it."))
           .catch(() => showError("Sharing not supported in this browser."));
       }
     }
 
-    function createConfetti() {
+    function celebrate() {
+      createConfetti(100);
+      playCelebrationSound();
+      showSuccess("🎉 Happy Birthday! 🎉");
+    }
+
+    function toggleMusic() {
+      if (isPlaying) {
+        birthdayAudio.pause();
+        isPlaying = false;
+      } else {
+        birthdayAudio.play().then(() => {
+          isPlaying = true;
+        }).catch(e => {
+          showError("Could not play audio. Please interact with the page first.");
+        });
+      }
+      updatePlayButton();
+    }
+
+    function updatePlayButton() {
+      const icon = playPauseBtn.querySelector('i');
+      if (isPlaying) {
+        icon.classList.remove('fa-play');
+        icon.classList.add('fa-pause');
+      } else {
+        icon.classList.remove('fa-pause');
+        icon.classList.add('fa-play');
+      }
+    }
+
+    function createConfetti(count = 50) {
       const colors = ['#ff4081', '#2196f3', '#4caf50', '#ff9800', '#9c27b0'];
       const container = document.querySelector('.container');
       
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < count; i++) {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
         confetti.style.left = Math.random() * 100 + '%';
@@ -767,8 +971,32 @@
         
         // Remove confetti after animation
         setTimeout(() => {
-          confetti.remove();
+          if (confetti.parentNode) {
+            confetti.remove();
+          }
         }, 5000);
+      }
+    }
+
+    function playCelebrationSound() {
+      // Create a simple celebration sound using Web Audio API
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 1);
+      } catch (e) {
+        console.log("Web Audio API not supported");
       }
     }
   </script>
