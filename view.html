@@ -3,45 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Wishes 🎂</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Birthday Wish 🎂</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    h2 { color: #ff4081; }
+    button {
+      background: #ff4081;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h2 id="title">🎉 Happy Birthday!</h2>
     <h3 id="name"></h3>
     <p id="message"></p>
-
-    <div class="share">
-      <button id="shareBtn">🔗 Share</button>
-    </div>
+    <button id="shareBtn">🔗 Share</button>
   </div>
 
-  <script type="module">
-    import { db, ref, get, child } from "./firebase.js";
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCd-9p5gqz6SzmmzVq6SqbJ0gXmsNpUUTQ",
+      authDomain: "happy-birthday-2deb4.firebaseapp.com",
+      databaseURL: "https://happy-birthday-2deb4-default-rtdb.firebaseio.com",
+      projectId: "happy-birthday-2deb4",
+      storageBucket: "happy-birthday-2deb4.firebasestorage.app",
+      messagingSenderId: "657496676319",
+      appId: "1:657496676319:web:956a472024be794df5566a",
+      measurementId: "G-01ZN71CQDD"
+    };
 
-    async function loadWish() {
-      const snapshot = await get(child(ref(db), `wishes/${id}`));
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        document.getElementById("name").innerText = `🎂 ${data.name}`;
-        document.getElementById("message").innerText = data.message;
-      } else {
-        document.getElementById("title").innerText = "Wish not found ❌";
-      }
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (id) {
+      db.ref("wishes/" + id).get().then(snapshot => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          document.getElementById("name").innerText = "🎂 " + data.name;
+          document.getElementById("message").innerText = data.message;
+        } else {
+          document.getElementById("title").innerText = "Wish not found ❌";
+        }
+      });
     }
 
-    loadWish();
-
     document.getElementById("shareBtn").addEventListener("click", () => {
-      navigator.share({
-        title: "Birthday Wish 🎉",
-        text: "Check out this special birthday wish!",
-        url: window.location.href,
-      });
+      if (navigator.share) {
+        navigator.share({
+          title: "Birthday Wish 🎉",
+          text: "Check out this special birthday wish!",
+          url: window.location.href
+        });
+      } else {
+        alert("Sharing not supported in this browser.");
+      }
     });
   </script>
 </body>
