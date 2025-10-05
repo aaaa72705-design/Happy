@@ -4,53 +4,293 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Create Birthday Wish 🎂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #ff4081;
+      --primary-dark: #e73370;
+      --secondary: #2196f3;
+      --light-bg: #f8f9fa;
+      --dark-text: #333;
+      --light-text: #fff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+      --border-radius: 16px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
-      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
       font-family: 'Poppins', sans-serif;
+      color: var(--dark-text);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      padding: 20px;
     }
+    
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
     .container {
       background: white;
       padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
       text-align: center;
-      width: 90%;
-      max-width: 400px;
+      width: 100%;
+      max-width: 500px;
+      transition: all 0.3s ease;
     }
+    
+    .logo {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    
+    h1 {
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-weight: 400;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
     input, textarea {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+      padding: 12px 15px;
       border-radius: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
       outline: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      transition: all 0.3s ease;
     }
+    
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(255, 64, 129, 0.2);
+    }
+    
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
     button {
-      background: #ff4081;
+      background: var(--primary);
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 12px 30px;
       border-radius: 10px;
       cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      margin: 10px 5px;
     }
+    
     button:hover {
-      background: #e73370;
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    #link a { color: blue; word-break: break-all; }
+    
+    button.secondary {
+      background: var(--secondary);
+    }
+    
+    button.secondary:hover {
+      background: #1976d2;
+    }
+    
+    #link {
+      margin-top: 20px;
+      padding: 15px;
+      background: var(--light-bg);
+      border-radius: 10px;
+      word-break: break-all;
+    }
+    
+    #link a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    #link a:hover {
+      text-decoration: underline;
+    }
+    
+    .wish-card {
+      background: white;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .wish-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+    
+    .wish-name {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+    
+    .wish-message {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      text-align: left;
+      background: var(--light-bg);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      animation: confetti-fall 5s linear infinite;
+    }
+    
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .error-message {
+      color: #f44336;
+      background: #ffebee;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      text-align: center;
+    }
+    
+    .success-message {
+      color: #4caf50;
+      background: #e8f5e9;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      text-align: center;
+      border-left: 4px solid #4caf50;
+    }
+    
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      button {
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>🎉 Create Birthday Wish</h2>
-    <input type="text" id="name" placeholder="Enter Name" required />
-    <textarea id="message" placeholder="Enter your birthday wish..." required></textarea>
-    <button id="submit">Create Wish</button>
-    <p id="link"></p>
+    <!-- Create Wish Section -->
+    <div id="create-section">
+      <div class="logo">🎂</div>
+      <h1>Create Birthday Wish</h1>
+      <p class="subtitle">Make someone's day special with a personalized birthday message</p>
+      
+      <div class="form-group">
+        <label for="name">Recipient's Name</label>
+        <input type="text" id="name" placeholder="Enter name" required />
+      </div>
+      
+      <div class="form-group">
+        <label for="message">Your Birthday Message</label>
+        <textarea id="message" placeholder="Write your heartfelt birthday wish here..." required></textarea>
+      </div>
+      
+      <button id="submit">
+        Create Birthday Wish
+      </button>
+      
+      <div id="link" class="hidden"></div>
+    </div>
+    
+    <!-- View Wish Section -->
+    <div id="view-section" class="hidden">
+      <div class="logo">🎉</div>
+      <h1>Happy Birthday!</h1>
+      
+      <div class="wish-card">
+        <h2 class="wish-name" id="view-name">Name</h2>
+        <div class="wish-message" id="view-message">Message</div>
+        <p>Wish created on <span id="view-date"></span></p>
+      </div>
+      
+      <button id="shareBtn">Share This Wish</button>
+      <button id="createNewBtn" class="secondary">Create New Wish</button>
+    </div>
+    
+    <!-- Error Message -->
+    <div id="error-message" class="error-message hidden"></div>
+    
+    <!-- Success Message -->
+    <div id="success-message" class="success-message hidden"></div>
   </div>
 
   <!-- Firebase SDK -->
@@ -58,7 +298,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
 
   <script>
-    // 🔥 Your Firebase Config
+    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCd-9p5gqz6SzmmzVq6SqbJ0gXmsNpUUTQ",
       authDomain: "happy-birthday-2deb4.firebaseapp.com",
@@ -74,27 +314,182 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    document.getElementById("submit").addEventListener("click", () => {
-      const name = document.getElementById("name").value.trim();
-      const message = document.getElementById("message").value.trim();
+    // DOM elements
+    const createSection = document.getElementById('create-section');
+    const viewSection = document.getElementById('view-section');
+    const nameInput = document.getElementById('name');
+    const messageInput = document.getElementById('message');
+    const submitBtn = document.getElementById('submit');
+    const linkDiv = document.getElementById('link');
+    const viewName = document.getElementById('view-name');
+    const viewMessage = document.getElementById('view-message');
+    const viewDate = document.getElementById('view-date');
+    const shareBtn = document.getElementById('shareBtn');
+    const createNewBtn = document.getElementById('createNewBtn');
+    const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
+
+    // Check if we're viewing a wish
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    if (id) {
+      // Show the view section
+      showViewSection();
+      loadWish(id);
+    } else {
+      // Show the create section
+      showCreateSection();
+    }
+
+    // Event listeners
+    submitBtn.addEventListener('click', createWish);
+    shareBtn.addEventListener('click', shareWish);
+    createNewBtn.addEventListener('click', showCreateSection);
+
+    // Functions
+    function showCreateSection() {
+      createSection.classList.remove('hidden');
+      viewSection.classList.add('hidden');
+      errorMessage.classList.add('hidden');
+      successMessage.classList.add('hidden');
+      // Clear URL parameters
+      if (window.history.replaceState) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
+    function showViewSection() {
+      createSection.classList.add('hidden');
+      viewSection.classList.remove('hidden');
+      errorMessage.classList.add('hidden');
+      successMessage.classList.add('hidden');
+    }
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.classList.remove('hidden');
+    }
+    
+    function showSuccess(message) {
+      successMessage.textContent = message;
+      successMessage.classList.remove('hidden');
+      
+      // Auto-hide after 3 seconds
+      setTimeout(() => {
+        successMessage.classList.add('hidden');
+      }, 3000);
+    }
+
+    function createWish() {
+      const name = nameInput.value.trim();
+      const message = messageInput.value.trim();
+      
       if (!name || !message) {
-        alert("Please fill in all fields!");
+        showError("Please fill in all fields!");
         return;
       }
-
+      
+      // Disable button during creation
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Creating...";
+      
       const newRef = db.ref("wishes").push();
       const id = newRef.key;
 
-      newRef.set({ name, message, createdAt: new Date().toISOString() })
-        .then(() => {
-          const url = `https://aaaa72705-design.github.io/Happy/view.html?id=${id}`;
-          document.getElementById("link").innerHTML = `
-            ✅ Wish created successfully!<br>
-            <a href="${url}" target="_blank">${url}</a>
-          `;
-        })
-        .catch(err => alert("Error: " + err.message));
-    });
+      newRef.set({ 
+        name, 
+        message, 
+        createdAt: new Date().toISOString() 
+      })
+      .then(() => {
+        // Create confetti effect
+        createConfetti();
+        
+        // Update URL without reloading
+        if (window.history.replaceState) {
+          const newUrl = `${window.location.pathname}?id=${id}`;
+          window.history.replaceState({}, document.title, newUrl);
+        }
+        
+        // Load and show the wish
+        loadWish(id);
+        showViewSection();
+        
+        // Show success message
+        showSuccess("🎉 Birthday wish created successfully!");
+      })
+      .catch(err => {
+        showError("Error creating wish: " + err.message);
+      })
+      .finally(() => {
+        // Reset button state
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create Birthday Wish";
+      });
+    }
+
+    function loadWish(id) {
+      db.ref("wishes/" + id).get().then(snapshot => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          viewName.textContent = data.name;
+          viewMessage.textContent = data.message;
+          
+          // Format date
+          const date = new Date(data.createdAt);
+          viewDate.textContent = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          
+          // Create confetti effect
+          createConfetti();
+        } else {
+          showError("Wish not found!");
+          showCreateSection();
+        }
+      }).catch(err => {
+        showError("Error loading wish: " + err.message);
+      });
+    }
+
+    function shareWish() {
+      if (navigator.share) {
+        navigator.share({
+          title: "Birthday Wish 🎉",
+          text: "Check out this special birthday wish!",
+          url: window.location.href
+        });
+      } else {
+        // Fallback: copy to clipboard
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => showSuccess("Link copied to clipboard!"))
+          .catch(() => showError("Sharing not supported in this browser."));
+      }
+    }
+
+    function createConfetti() {
+      const colors = ['#ff4081', '#2196f3', '#4caf50', '#ff9800', '#9c27b0'];
+      const container = document.querySelector('.container');
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(confetti);
+        
+        // Remove confetti after animation
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
   </script>
 </body>
 </html>
