@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Wishes 🎂</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2 id="title">🎉 Happy Birthday!</h2>
+    <h3 id="name"></h3>
+    <p id="message"></p>
+
+    <div class="share">
+      <button id="shareBtn">🔗 Share</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { db, ref, get, child } from "./firebase.js";
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+
+    async function loadWish() {
+      const snapshot = await get(child(ref(db), `wishes/${id}`));
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        document.getElementById("name").innerText = `🎂 ${data.name}`;
+        document.getElementById("message").innerText = data.message;
+      } else {
+        document.getElementById("title").innerText = "Wish not found ❌";
+      }
+    }
+
+    loadWish();
+
+    document.getElementById("shareBtn").addEventListener("click", () => {
+      navigator.share({
+        title: "Birthday Wish 🎉",
+        text: "Check out this special birthday wish!",
+        url: window.location.href,
+      });
+    });
+  </script>
+</body>
+</html>
